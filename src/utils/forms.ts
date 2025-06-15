@@ -92,23 +92,46 @@ export async function submitToGoogleForms(data: Record<string, string>): Promise
   return submitForm(MUSIC_FORM_CONFIG.formId, formattedData);
 }
 
+interface Attendee {
+  name: string;
+  dietaryRestrictions?: string;
+  age?: number;
+}
 
 export async function submitRSVP(data: {
-  name: string;
   attendance: 'yes' | 'no';
-  guestCount?: number;
+  attendees?: Attendee[];
   details?: string;
 }): Promise<void> {
   const formattedData: Record<string, string> = {
-    [`entry.${RSVP_FORM_CONFIG.fields.name}`]: data.name,
     [`entry.${RSVP_FORM_CONFIG.fields.attendance}`]: data.attendance === 'yes' ? 'Sí' : 'No',
   };
 
-  if (data.attendance === 'yes' && data.guestCount) {
-    formattedData[`entry.${RSVP_FORM_CONFIG.fields.guestCount}`] = data.guestCount.toString();
-  }
-  if (data.details) {
-    formattedData[`entry.${RSVP_FORM_CONFIG.fields.details}`] = data.details;
+  if (data.attendance === 'yes' && data.attendees) {
+    // Submit the total number of attendees
+    formattedData[`entry.${RSVP_FORM_CONFIG.fields.guestCount}`] = data.attendees.length.toString();
+    
+    // Format attendees information for the details field
+    const attendeesDetails = data.attendees.map((attendee, index) => {
+      let details = `Asistente ${index + 1}:\n`;
+      details += `Nombre: ${attendee.name}\n`;
+      if (attendee.dietaryRestrictions) {
+        details += `Restricciones alimentarias: ${attendee.dietaryRestrictions}\n`;
+      }
+      if (attendee.age) {
+        details += `Edad: ${attendee.age}\n`;
+      }
+      return details;
+    }).join('\n');
+
+    // Combine attendees details with any additional details
+    const fullDetails = [
+      attendeesDetails,
+      data.details
+    ].filter(Boolean).join('\n\n');
+
+    formattedData[`entry.${RSVP_FORM_CONFIG.fields.details}`] = fullDetails;
+    formattedData[`entry.${RSVP_FORM_CONFIG.fields.name}`] = data.attendees[0].name;
   }
 
   return submitForm(RSVP_FORM_CONFIG.formId, formattedData);

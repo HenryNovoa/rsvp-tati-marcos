@@ -1,34 +1,50 @@
 import React, { useState } from 'react';
 import { submitRSVP, SubmissionStatus } from '../../utils/forms';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Plus, Trash2 } from 'lucide-react';
+
+interface Attendee {
+  name: string;
+  dietaryRestrictions?: string;
+  age?: number;
+}
 
 interface RSVPFormProps {
   onSubmit?: () => void;
 }
 
 export function RSVPForm({ onSubmit }: RSVPFormProps) {
-  const [formData, setFormData] = useState({
-    name: '',
-    attendance: null as 'yes' | 'no' | null,
-    guestCount: 1,
-    details: '',
-  });
+  const [attendance, setAttendance] = useState<'yes' | 'no' | null>(null);
+  const [attendees, setAttendees] = useState<Attendee[]>([{ name: '' }]);
+  const [details, setDetails] = useState('');
   const [status, setStatus] = useState<SubmissionStatus>({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const addAttendee = () => {
+    setAttendees([...attendees, { name: '' }]);
+  };
+
+  const removeAttendee = (index: number) => {
+    setAttendees(attendees.filter((_, i) => i !== index));
+  };
+
+  const updateAttendee = (index: number, field: keyof Attendee, value: string | number) => {
+    const newAttendees = [...attendees];
+    newAttendees[index] = { ...newAttendees[index], [field]: value };
+    setAttendees(newAttendees);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.attendance) return;
+    if (!attendance) return;
 
     setIsSubmitting(true);
     setStatus({ type: '', message: '' });
 
     try {
       await submitRSVP({
-        name: formData.name,
-        attendance: formData.attendance,
-        guestCount: formData.attendance === 'yes' ? formData.guestCount : undefined,
-        details: formData.details || undefined,
+        attendance,
+        attendees,
+        details,
       });
 
       setStatus({
@@ -52,30 +68,15 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <label htmlFor="name" className="block text-sm font-medium text-[#4A5D4B] mb-2">
-          Nombre completo
-        </label>
-        <input
-          type="text"
-          id="name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full px-4 py-2 rounded-md border border-[#8FA98F] focus:outline-none focus:ring-2 focus:ring-[#4A5D4B]"
-          required
-          disabled={isSubmitting}
-        />
-      </div>
-
       <div className="space-y-3">
         <p className="text-sm font-medium text-[#4A5D4B]">Confirmación de asistencia</p>
         <div className="flex gap-4">
           <button
             type="button"
-            onClick={() => setFormData({ ...formData, attendance: 'yes' })}
+            onClick={() => setAttendance('yes')}
             disabled={isSubmitting}
             className={`flex-1 py-2 rounded-md border transition-colors ${
-              formData.attendance === 'yes'
+              attendance === 'yes'
                 ? 'bg-[#4A5D4B] text-white border-[#4A5D4B]'
                 : 'border-[#8FA98F] text-[#4A5D4B] hover:bg-[#8FA98F]/10'
             }`}
@@ -84,10 +85,10 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
           </button>
           <button
             type="button"
-            onClick={() => setFormData({ ...formData, attendance: 'no' })}
+            onClick={() => setAttendance('no')}
             disabled={isSubmitting}
             className={`flex-1 py-2 rounded-md border transition-colors ${
-              formData.attendance === 'no'
+              attendance === 'no'
                 ? 'bg-[#4A5D4B] text-white border-[#4A5D4B]'
                 : 'border-[#8FA98F] text-[#4A5D4B] hover:bg-[#8FA98F]/10'
             }`}
@@ -97,39 +98,100 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
         </div>
       </div>
 
-      {formData.attendance === 'yes' && (
-        <div>
-          <label htmlFor="guestCount" className="block text-sm font-medium text-[#4A5D4B] mb-2">
-            Número total de asistentes (incluyéndote)
-          </label>
-          <input
-            type="number"
-            id="guestCount"
-            min="1"
-            max="10"
-            value={formData.guestCount}
-            onChange={(e) => setFormData({ ...formData, guestCount: parseInt(e.target.value, 10) })}
-            className="w-full px-4 py-2 rounded-md border border-[#8FA98F] focus:outline-none focus:ring-2 focus:ring-[#4A5D4B]"
-            required
-            disabled={isSubmitting}
-          />
-          <p className="mt-1 text-xs text-gray-500">
-            Por favor, indica el número total de personas que asistirán
-          </p>
+      {attendance === 'yes' && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-medium text-[#4A5D4B]">Asistentes</h3>
+            <button
+              type="button"
+              onClick={addAttendee}
+              className="text-[#4A5D4B] hover:text-[#8FA98F] transition-colors flex items-center gap-1 text-sm"
+            >
+              <Plus className="w-4 h-4" />
+              Agregar asistente
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            {attendees.map((attendee, index) => (
+              <div key={index} className="p-4 bg-white rounded-lg border border-[#8FA98F]/20">
+                <div className="flex justify-between items-start mb-4">
+                  <span className="text-sm font-medium text-[#4A5D4B]">
+                    Asistente {index + 1}
+                  </span>
+                  {index > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => removeAttendee(index)}
+                      className="text-red-500 hover:text-red-600 transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-[#4A5D4B] mb-2">
+                      Nombre completo
+                    </label>
+                    <input
+                      type="text"
+                      value={attendee.name}
+                      onChange={(e) => updateAttendee(index, 'name', e.target.value)}
+                      className="w-full px-4 py-2 rounded-md border border-[#8FA98F] focus:outline-none focus:ring-2 focus:ring-[#4A5D4B]"
+                      required
+                      disabled={isSubmitting}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#4A5D4B] mb-2">
+                      Restricciones alimentarias
+                    </label>
+                    <input
+                      type="text"
+                      value={attendee.dietaryRestrictions || ''}
+                      onChange={(e) => updateAttendee(index, 'dietaryRestrictions', e.target.value)}
+                      placeholder="Vegetariano, vegano, alergias, etc."
+                      className="w-full px-4 py-2 rounded-md border border-[#8FA98F] focus:outline-none focus:ring-2 focus:ring-[#4A5D4B]"
+                      disabled={isSubmitting}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#4A5D4B] mb-2">
+                      Edad
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      max="120"
+                      value={attendee.age || ''}
+                      onChange={(e) => updateAttendee(index, 'age', parseInt(e.target.value, 10))}
+                      className="w-full px-4 py-2 rounded-md border border-[#8FA98F] focus:outline-none focus:ring-2 focus:ring-[#4A5D4B]"
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
       <div>
         <label htmlFor="details" className="block text-sm font-medium text-[#4A5D4B] mb-2">
-          Detalles adicionales (ej: Soy vegetariano)
+          Detalles adicionales
         </label>
         <textarea
           id="details"
-          value={formData.details}
-          onChange={(e) => setFormData({ ...formData, details: e.target.value })}
+          value={details}
+          onChange={(e) => setDetails(e.target.value)}
           className="w-full px-4 py-2 rounded-md border border-[#8FA98F] focus:outline-none focus:ring-2 focus:ring-[#4A5D4B]"
           rows={3}
           disabled={isSubmitting}
+          placeholder="¿Algo más que debamos saber?"
         />
       </div>
 
@@ -147,7 +209,7 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
 
       <button
         type="submit"
-        disabled={isSubmitting || !formData.attendance}
+        disabled={isSubmitting || !attendance}
         className="w-full py-3 bg-[#4A5D4B] text-white rounded-md hover:bg-[#3A4D3B] hover:-translate-y-0.5 transition-all font-semibold tracking-wide text-sm disabled:opacity-50 disabled:hover:translate-y-0 flex items-center justify-center gap-2"
       >
         {isSubmitting ? (

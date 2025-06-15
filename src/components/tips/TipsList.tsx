@@ -1,11 +1,8 @@
-import React from 'react';
-
 const tips = [
-  '¡Por favor ser puntuales!',
-  'Queremos que disfrutes de esta fiesta al máximo, por eso decidimos que sea un evento sólo para adultos.',
-  '¡Confirmar asistencia a la brevedad, antes del X Fecha!',
-  'Llevar abrigo para disfrutar de los espacios exteriores.',
-  'Olvidarse de todo, y ¡¡¡a disfrutar!!!'
+  "Confirma tu asistencia lo antes posible",
+  "Porfavor, se agradece puntualidad",
+  "Queremos que disfrutes al máximo de esta fiesta, por eso hemos decidido que solo vengan los niños de la familia",
+  "Olvidaros de todo y ¡¡¡a disfrutar!!!",
 ];
 
 export function TipsList() {

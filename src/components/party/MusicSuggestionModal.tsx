@@ -1,13 +1,15 @@
-import React from 'react';
-import { Modal } from '../shared/Modal';
-import { MusicSuggestionForm } from './MusicSuggestionForm';
+import { Modal } from "../shared/TextModal";
+import { MusicSuggestionForm } from "./MusicSuggestionForm";
 
 interface MusicSuggestionModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export function MusicSuggestionModal({ isOpen, onClose }: MusicSuggestionModalProps) {
+export function MusicSuggestionModal({
+  isOpen,
+  onClose,
+}: MusicSuggestionModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="text-center">

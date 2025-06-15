@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { SplashScreen } from './components/SplashScreen';
-import { Header } from './components/Header';
-import { CountdownDisplay } from './components/countdown/CountdownDisplay';
-import { CeremonySection } from './components/ceremony/CeremonySection';
-import { CelebrationSection } from './components/celebration/CelebrationSection';
-import { PhotoGallery } from './components/gallery/PhotoGallery';
-import { MusicSection } from './components/party/MusicSection';
-import { DressCodeSection } from './components/party/DressCodeSection';
-import { TipsSection } from './components/tips/TipsSection';
-import { GiftsSection } from './components/gifts/GiftsSection';
-import { PhotoSharingSection } from './components/sharing/PhotoSharingSection';
-import { RSVPSection } from './components/rsvp/RSVPSection';
+import { useState } from "react";
+import { Header } from "./components/Header";
+import { SplashScreen } from "./components/SplashScreen";
+import { CelebrationSection } from "./components/celebration/CelebrationSection";
+import { CountdownDisplay } from "./components/countdown/CountdownDisplay";
+import { PhotoGallery } from "./components/gallery/PhotoGallery";
+import { DressCodeSection } from "./components/party/DressCodeSection";
+import { MusicSection } from "./components/party/MusicSection";
+import { RSVPSection } from "./components/rsvp/RSVPSection";
+import { PhotoSharingSection } from "./components/sharing/PhotoSharingSection";
+import { TipsSection } from "./components/tips/TipsSection";
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -24,13 +22,11 @@ export default function App() {
           <div className="my-16">
             <CountdownDisplay />
           </div>
-          <CeremonySection />
           <CelebrationSection />
           <PhotoGallery />
           <MusicSection />
           <DressCodeSection />
           <TipsSection />
-          <GiftsSection />
           <PhotoSharingSection />
           <RSVPSection />
         </div>

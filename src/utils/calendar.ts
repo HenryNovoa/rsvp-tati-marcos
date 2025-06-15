@@ -1,5 +1,3 @@
-import { formatISO } from 'date-fns';
-
 interface EventDetails {
   title: string;
   startDate: Date;
@@ -9,9 +7,17 @@ interface EventDetails {
 }
 
 export function createCalendarUrl(event: EventDetails): string {
+  const formatGoogleDate = (date: Date) => {
+    return date
+      .toISOString()
+      .replace(/[-:]/g, "")
+      .replace(/\.\d{3}/, "");
+  };
   const encodedDetails = {
     title: encodeURIComponent(event.title),
-    dates: `${formatISO(event.startDate)}/${formatISO(event.endDate)}`,
+    dates: `${formatGoogleDate(event.startDate)}/${formatGoogleDate(
+      event.endDate
+    )}`,
     details: encodeURIComponent(event.description),
     location: encodeURIComponent(event.location),
   };
