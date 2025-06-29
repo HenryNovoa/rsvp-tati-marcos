@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Section } from '../shared/Section';
-import { ConfirmationModal } from './ConfirmationModal';
+import { useState } from "react";
+import { Section } from "../shared/Section";
+import { ConfirmationModal } from "./ConfirmationModal";
 
 export function RSVPSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <Section title="Confirmación" className="bg-white/50">
-      <div className="max-w-md mx-auto text-center">
+      <div className="max-w-md mx-auto text-center font-belista italic">
         <p className="text-center text-lg text-[#2D3436] mb-8">
           ¿Nos acompañas en este día tan especial?
         </p>
@@ -17,9 +17,10 @@ export function RSVPSection() {
         >
           CONFIRMAR ASISTENCIA
         </button>
-        <ConfirmationModal 
-          isOpen={isModalOpen} 
-          onClose={() => setIsModalOpen(false)} 
+        <ConfirmationModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          noPadding={false}
         />
       </div>
     </Section>

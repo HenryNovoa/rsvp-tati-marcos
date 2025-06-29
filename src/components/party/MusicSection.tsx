@@ -8,7 +8,7 @@ export function MusicSection() {
 
   return (
     <Section title="Fiesta" className="bg-texture">
-      <div className="max-w-md mx-auto text-center">
+      <div className="max-w-md mx-auto text-center font-belista italic">
         <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center mx-auto mb-6">
           <Music className="w-6 h-6 text-[#4A5D4B] animate-bounce-subtle" />
         </div>
@@ -38,6 +38,7 @@ export function MusicSection() {
         <MusicSuggestionModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
+          noPadding={false}
         />
       </div>
     </Section>

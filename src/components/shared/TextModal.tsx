@@ -5,9 +5,15 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  noPadding: boolean;
 }
 
-export function Modal({ isOpen, onClose, children }: ModalProps) {
+export function TextModal({
+  isOpen,
+  onClose,
+  noPadding,
+  children,
+}: ModalProps) {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -33,7 +39,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
         onClick={onClose}
       />
       <div className="relative bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
+        <div className={noPadding ? "" : "p-6"}>
           <button
             onClick={onClose}
             className="absolute right-4 top-4 p-2 text-gray-400 hover:text-gray-600 transition-colors z-10"

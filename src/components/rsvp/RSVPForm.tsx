@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { submitRSVP, SubmissionStatus } from '../../utils/forms';
-import { Loader2, Plus, Trash2 } from 'lucide-react';
+import { Loader2, Plus, Trash2 } from "lucide-react";
+import React, { useState } from "react";
+import { SubmissionStatus, submitRSVP } from "../../utils/forms";
 
 interface Attendee {
   name: string;
@@ -13,21 +13,28 @@ interface RSVPFormProps {
 }
 
 export function RSVPForm({ onSubmit }: RSVPFormProps) {
-  const [attendance, setAttendance] = useState<'yes' | 'no' | null>(null);
-  const [attendees, setAttendees] = useState<Attendee[]>([{ name: '' }]);
-  const [details, setDetails] = useState('');
-  const [status, setStatus] = useState<SubmissionStatus>({ type: '', message: '' });
+  const [attendance, setAttendance] = useState<"yes" | "no" | null>(null);
+  const [attendees, setAttendees] = useState<Attendee[]>([{ name: "" }]);
+  const [details, setDetails] = useState("");
+  const [status, setStatus] = useState<SubmissionStatus>({
+    type: "",
+    message: "",
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const addAttendee = () => {
-    setAttendees([...attendees, { name: '' }]);
+    setAttendees([...attendees, { name: "" }]);
   };
 
   const removeAttendee = (index: number) => {
     setAttendees(attendees.filter((_, i) => i !== index));
   };
 
-  const updateAttendee = (index: number, field: keyof Attendee, value: string | number) => {
+  const updateAttendee = (
+    index: number,
+    field: keyof Attendee,
+    value: string | number
+  ) => {
     const newAttendees = [...attendees];
     newAttendees[index] = { ...newAttendees[index], [field]: value };
     setAttendees(newAttendees);
@@ -38,7 +45,7 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
     if (!attendance) return;
 
     setIsSubmitting(true);
-    setStatus({ type: '', message: '' });
+    setStatus({ type: "", message: "" });
 
     try {
       await submitRSVP({
@@ -48,18 +55,18 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
       });
 
       setStatus({
-        type: 'success',
-        message: '¡Gracias por confirmar tu asistencia!',
+        type: "success",
+        message: "¡Gracias por confirmar tu asistencia!",
       });
-      
+
       setTimeout(() => {
         onSubmit?.();
       }, 1500);
     } catch (error) {
-      console.error('RSVP submission error:', error);
+      console.error("RSVP submission error:", error);
       setStatus({
-        type: 'error',
-        message: 'Hubo un error. Por favor intenta nuevamente.',
+        type: "error",
+        message: "Hubo un error. Por favor intenta nuevamente.",
       });
     } finally {
       setIsSubmitting(false);
@@ -68,29 +75,31 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-3">
-        <p className="text-sm font-medium text-[#4A5D4B]">Confirmación de asistencia</p>
+      <div className="space-y-3 font-belista italic">
+        <p className="text-sm font-medium text-[#4A5D4B] font-belista italic">
+          Confirmación de asistencia
+        </p>
         <div className="flex gap-4">
           <button
             type="button"
-            onClick={() => setAttendance('yes')}
+            onClick={() => setAttendance("yes")}
             disabled={isSubmitting}
             className={`flex-1 py-2 rounded-md border transition-colors ${
-              attendance === 'yes'
-                ? 'bg-[#4A5D4B] text-white border-[#4A5D4B]'
-                : 'border-[#8FA98F] text-[#4A5D4B] hover:bg-[#8FA98F]/10'
+              attendance === "yes"
+                ? "bg-[#4A5D4B] text-white border-[#4A5D4B]"
+                : "border-[#8FA98F] text-[#4A5D4B] hover:bg-[#8FA98F]/10"
             }`}
           >
             ¡Sí, confirmo!
           </button>
           <button
             type="button"
-            onClick={() => setAttendance('no')}
+            onClick={() => setAttendance("no")}
             disabled={isSubmitting}
             className={`flex-1 py-2 rounded-md border transition-colors ${
-              attendance === 'no'
-                ? 'bg-[#4A5D4B] text-white border-[#4A5D4B]'
-                : 'border-[#8FA98F] text-[#4A5D4B] hover:bg-[#8FA98F]/10'
+              attendance === "no"
+                ? "bg-[#4A5D4B] text-white border-[#4A5D4B]"
+                : "border-[#8FA98F] text-[#4A5D4B] hover:bg-[#8FA98F]/10"
             }`}
           >
             No puedo 😢
@@ -98,7 +107,7 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
         </div>
       </div>
 
-      {attendance === 'yes' && (
+      {attendance === "yes" && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-medium text-[#4A5D4B]">Asistentes</h3>
@@ -114,7 +123,10 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
 
           <div className="space-y-4">
             {attendees.map((attendee, index) => (
-              <div key={index} className="p-4 bg-white rounded-lg border border-[#8FA98F]/20">
+              <div
+                key={index}
+                className="p-4 bg-white rounded-lg border border-[#8FA98F]/20"
+              >
                 <div className="flex justify-between items-start mb-4">
                   <span className="text-sm font-medium text-[#4A5D4B]">
                     Asistente {index + 1}
@@ -138,7 +150,9 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
                     <input
                       type="text"
                       value={attendee.name}
-                      onChange={(e) => updateAttendee(index, 'name', e.target.value)}
+                      onChange={(e) =>
+                        updateAttendee(index, "name", e.target.value)
+                      }
                       className="w-full px-4 py-2 rounded-md border border-[#8FA98F] focus:outline-none focus:ring-2 focus:ring-[#4A5D4B]"
                       required
                       disabled={isSubmitting}
@@ -151,8 +165,14 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
                     </label>
                     <input
                       type="text"
-                      value={attendee.dietaryRestrictions || ''}
-                      onChange={(e) => updateAttendee(index, 'dietaryRestrictions', e.target.value)}
+                      value={attendee.dietaryRestrictions || ""}
+                      onChange={(e) =>
+                        updateAttendee(
+                          index,
+                          "dietaryRestrictions",
+                          e.target.value
+                        )
+                      }
                       placeholder="Vegetariano, vegano, alergias, etc."
                       className="w-full px-4 py-2 rounded-md border border-[#8FA98F] focus:outline-none focus:ring-2 focus:ring-[#4A5D4B]"
                       disabled={isSubmitting}
@@ -167,8 +187,14 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
                       type="number"
                       min="0"
                       max="120"
-                      value={attendee.age || ''}
-                      onChange={(e) => updateAttendee(index, 'age', parseInt(e.target.value, 10))}
+                      value={attendee.age || ""}
+                      onChange={(e) =>
+                        updateAttendee(
+                          index,
+                          "age",
+                          parseInt(e.target.value, 10)
+                        )
+                      }
                       className="w-full px-4 py-2 rounded-md border border-[#8FA98F] focus:outline-none focus:ring-2 focus:ring-[#4A5D4B]"
                       disabled={isSubmitting}
                     />
@@ -181,7 +207,10 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
       )}
 
       <div>
-        <label htmlFor="details" className="block text-sm font-medium text-[#4A5D4B] mb-2">
+        <label
+          htmlFor="details"
+          className="block text-sm font-medium text-[#4A5D4B] mb-2"
+        >
           Detalles adicionales
         </label>
         <textarea
@@ -198,9 +227,9 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
       {status.message && (
         <div
           className={`p-3 rounded-md text-center ${
-            status.type === 'success'
-              ? 'bg-green-50 text-green-700'
-              : 'bg-red-50 text-red-700'
+            status.type === "success"
+              ? "bg-green-50 text-green-700"
+              : "bg-red-50 text-red-700"
           }`}
         >
           {status.message}
@@ -218,7 +247,7 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
             <span>ENVIANDO...</span>
           </>
         ) : (
-          'ENVIAR'
+          "ENVIAR"
         )}
       </button>
     </form>

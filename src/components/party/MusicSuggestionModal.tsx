@@ -1,17 +1,19 @@
-import { Modal } from "../shared/TextModal";
+import { TextModal } from "../shared/TextModal";
 import { MusicSuggestionForm } from "./MusicSuggestionForm";
 
 interface MusicSuggestionModalProps {
   isOpen: boolean;
   onClose: () => void;
+  noPadding: boolean;
 }
 
 export function MusicSuggestionModal({
   isOpen,
   onClose,
+  noPadding,
 }: MusicSuggestionModalProps) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <TextModal isOpen={isOpen} onClose={onClose} noPadding={noPadding}>
       <div className="text-center">
         <h2 className="text-2xl font-playfair text-[#4A5D4B] mb-4">
           Sugerir Canción
@@ -21,6 +23,6 @@ export function MusicSuggestionModal({
         </p>
         <MusicSuggestionForm onSubmit={onClose} />
       </div>
-    </Modal>
+    </TextModal>
   );
 }

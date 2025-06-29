@@ -1,3 +1,38 @@
+@font-face {
+  font-family: "Belista";
+  src: url("./styles/fonts/belista_script/Belista.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Belista Script";
+  src: url("./styles/fonts/belista_script/Belista Script.otf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Belista Caps";
+  src: url("./styles/fonts/belista_script/Belista Caps.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Stylish Calligraphy";
+  src: url("./styles/fonts/stylish_calligraphy/Stylish Calligraphy Demo.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Self Deception Regular";
+  src: url("./styles/fonts/self-deception-font/SelfDeceptionRegular-ALLWA.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap");
 
 @tailwind base;

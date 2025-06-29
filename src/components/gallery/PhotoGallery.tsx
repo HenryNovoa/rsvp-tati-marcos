@@ -1,6 +1,5 @@
-import React from 'react';
-import { Section } from '../shared/Section';
-import { PhotoCarousel } from './PhotoCarousel';
+import { Section } from "../shared/Section";
+import { PhotoCarousel } from "./PhotoCarousel";
 
 export function PhotoGallery() {
   return (
