@@ -16,8 +16,8 @@ export default function App() {
   return (
     <>
       {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
-      <main className="min-h-screen bg-[#F8F6F6]">
-        <div className="max-w-4xl mx-auto">
+      <main className="min-h-screen w-full bg-[#F8F6F6] overflow-x-hidden">
+        <div className="max-w-4xl w-full mx-auto">
           <Header />
           <div className="my-16">
             <CountdownDisplay />

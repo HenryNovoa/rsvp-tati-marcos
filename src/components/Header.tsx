@@ -8,8 +8,7 @@ export function Header() {
         <p className="text-lg text-[#2D3436]">19.10.2025</p>
       </div>
       <blockquote className="italic text-[#4A5D4B] max-w-md mx-auto">
-        "Todos somos mortales, hasta el primer beso y la segunda copa de
-        cerveza"
+        "Todos somos mortales, hasta el primer beso o la segunda cerveza"
       </blockquote>
     </header>
   );
