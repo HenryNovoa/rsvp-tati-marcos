@@ -3,6 +3,7 @@ import { Header } from "./components/Header";
 import { SplashScreen } from "./components/SplashScreen";
 import { CelebrationSection } from "./components/celebration/CelebrationSection";
 import { CountdownDisplay } from "./components/countdown/CountdownDisplay";
+import { Footer } from "./components/footer/Footer";
 import { PhotoGallery } from "./components/gallery/PhotoGallery";
 import { DressCodeSection } from "./components/party/DressCodeSection";
 import { MusicSection } from "./components/party/MusicSection";
@@ -23,12 +24,13 @@ export default function App() {
             <CountdownDisplay />
           </div>
           <CelebrationSection />
-          <PhotoGallery />
           <MusicSection />
           <DressCodeSection />
           <TipsSection />
           <PhotoSharingSection />
+          <PhotoGallery />
           <RSVPSection />
+          <Footer />
         </div>
       </main>
     </>

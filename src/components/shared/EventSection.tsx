@@ -2,9 +2,9 @@ import React from "react";
 import { SectionIcon } from "./SectionIcon";
 
 interface EventSectionProps {
-  title: string;
-  type: "ceremony" | "celebration";
-  children: React.ReactNode;
+  readonly title: string;
+  readonly type: "ceremony" | "celebration";
+  readonly children: React.ReactNode;
 }
 
 export function EventSection({ title, type, children }: EventSectionProps) {
@@ -21,9 +21,9 @@ export function EventSection({ title, type, children }: EventSectionProps) {
 
       {/* Title */}
       <div className="relative z-10 flex justify-center mb-8">
-        <h2 className="inline-block bg-[#8FA98F] px-6 py-2 text-4xl font-playfair text-white relative font-self-deception-regular">
+        <h2 className="inline-block px-6 py-2 text-4xl font-playfair text-white relative font-self-deception-regular">
           {title}
-          <div className="absolute -left-3 -right-3 h-full bg-[#8FA98F] -skew-x-12 -z-10 top-0" />
+          <div className="absolute -left-3 -right-3 h-full -skew-x-12 -z-10 top-0" />
         </h2>
       </div>
 

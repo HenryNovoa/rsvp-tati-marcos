@@ -7,19 +7,15 @@ export function TipsSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <Section title="" className="bg-[#F8F6F6]">
-      <div className="max-w-[400px] mx-auto bg-white rounded-xl shadow-sm p-6 font-belista italic">
+    <Section title="Tips y notas" className="bg-[#F8F6F6]">
+      <div className="max-w-md mx-auto text-center font-belista italic">
         <div className="flex flex-col items-center">
           <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center">
             <ClipboardCheck className="w-8 h-8 text-[#2D3436] animate-gentle-pulse" />
           </div>
 
-          <h3 className="font-playfair text-xl text-[#2D3436] mt-4 mb-2">
-            Tips y Notas
-          </h3>
-
-          <p className="text-sm text-[#666666] mb-6">
-            Información adicional para tener en cuenta
+          <p className="text-sm text-[#666666] mb-6 mt-6">
+            Información adicional a tener en cuenta
           </p>
 
           <button

@@ -1,5 +1,4 @@
 import { WEDDING_DATE } from "../../utils/date";
-import { BotanicalFrame } from "./BotanicalFrame";
 import { CountdownUnit } from "./CountdownUnit";
 import { useCountdown } from "./useCountdown";
 
@@ -7,8 +6,7 @@ export function CountdownDisplay() {
   const { timeLeft } = useCountdown(WEDDING_DATE);
 
   return (
-    <div className="relative max-w-2xl mx-auto p-4 md:p-8">
-      <BotanicalFrame />
+    <div className="relative max-w-2xl mx-auto md:p-8">
       <div className="relative z-10">
         <h3 className="text-center font-serif text-2xl text-[#4A5D4B] mb-6 md:mb-8">
           {"     "}
