@@ -21,9 +21,6 @@ export function MusicSection() {
               ¿Cuál es la canción que no debe faltar en la playlist de la
               fiesta?
             </p>
-            <p className="text-[#666666] max-w-[260px] mx-auto">
-              Es orientativo ¡Queremos saber vuestros gustos!
-            </p>
 
             <button
               onClick={() => setIsModalOpen(true)}
