@@ -18,7 +18,7 @@ export function SaveDateButton() {
   return (
     <ActionButton
       icon={Calendar}
-      label="SAVE THE DATE"
+      label="APÚNTATE EL DÍA"
       onClick={handleSaveDate}
     />
   );

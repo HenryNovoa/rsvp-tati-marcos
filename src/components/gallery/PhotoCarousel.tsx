@@ -28,8 +28,6 @@ const photos = [
   "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-19.jpg",
   "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-20.jpg",
   "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-21.jpg",
-  "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-22.jpg",
-  "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-23.jpg",
   "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-25.jpg",
   "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-26.jpg",
   "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-27.jpg",

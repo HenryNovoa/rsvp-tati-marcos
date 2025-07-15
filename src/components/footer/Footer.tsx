@@ -1,10 +1,10 @@
 export function Footer() {
   return (
-    <div className="flex justify-center w-full bg-[#FFFFFF] opacity-50">
+    <div className="flex justify-center w-full bg-[#FFFFFF] opacity-50 mb-12">
       <img
         src="https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/logo.svg"
         alt=""
-        className="w-32 h-32 object-cover"
+        className="w-60 h-60 object-cover"
       />
     </div>
   );

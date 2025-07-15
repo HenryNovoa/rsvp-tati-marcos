@@ -22,7 +22,7 @@ export function SharingOptions() {
           className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-[#4A5D4B] text-white rounded-full hover:bg-[#8FA98F] transition-colors"
         >
           <ExternalLink className="w-5 h-5" />
-          <span className="font-belista italic">VER ÁLBUM</span>
+          <span className="italic">VER ÁLBUM</span>
         </button>
       </div>
     </div>

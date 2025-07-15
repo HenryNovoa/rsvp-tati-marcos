@@ -1,5 +1,4 @@
-import React from 'react';
-import { LucideIcon } from 'lucide-react';
+import { LucideIcon } from "lucide-react";
 
 interface ActionButtonProps {
   icon: LucideIcon;
@@ -8,7 +7,12 @@ interface ActionButtonProps {
   className?: string;
 }
 
-export function ActionButton({ icon: Icon, label, onClick, className = '' }: ActionButtonProps) {
+export function ActionButton({
+  icon: Icon,
+  label,
+  onClick,
+  className = "",
+}: ActionButtonProps) {
   return (
     <button
       onClick={onClick}

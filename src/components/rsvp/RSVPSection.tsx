@@ -7,8 +7,8 @@ export function RSVPSection() {
 
   return (
     <Section title="Confirmación" className="bg-white/50">
-      <div className="max-w-md mx-auto text-center font-belista italic">
-        <p className="text-center text-lg text-[#2D3436] mb-8">
+      <div className="max-w-md mx-auto text-center italic">
+        <p className="text-center text-base text-[#2D3436] mb-8">
           ¿Nos acompañas en este día tan especial?
         </p>
         <button
