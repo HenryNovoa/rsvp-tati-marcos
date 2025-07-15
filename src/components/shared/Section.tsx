@@ -8,7 +8,7 @@ interface SectionProps {
 
 export function Section({ title, children, className = "" }: SectionProps) {
   return (
-    <section className={`py-16 px-4 ${className}`}>
+    <section className={`pb-16 px-4 ${className}`}>
       <h2 className="text-6xl text-[#4A5D4B] text-center mb-8 font-self-deception-regular">
         {title}
       </h2>
