@@ -8,7 +8,7 @@ export function MusicSection() {
 
   return (
     <>
-      <div className="bg-texture pt-4">
+      <div className="bg-texture py-4 ">
         <div className="w-12 h-12 rounded-full shadow-sm flex items-center justify-center mx-auto bg-white">
           <Music className="w-6 h-6 text-[#4A5D4B] animate-bounce-subtle" />
         </div>
@@ -16,7 +16,6 @@ export function MusicSection() {
       <Section title="Fiesta" className="bg-texture">
         <div className="max-w-md mx-auto text-center font-belista italic">
           <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-[#2D3436]">Música</h3>
             <p className="text-[#666666] max-w-[260px] mx-auto">
               ¿Cuál es la canción que no debe faltar en la playlist de la
               fiesta?

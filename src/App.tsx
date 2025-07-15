@@ -6,6 +6,7 @@ import { CountdownDisplay } from "./components/countdown/CountdownDisplay";
 import { Footer } from "./components/footer/Footer";
 import { PhotoGallery } from "./components/gallery/PhotoGallery";
 import { DressCodeSection } from "./components/party/DressCodeSection";
+import { MusicSection } from "./components/party/MusicSection";
 import { RSVPSection } from "./components/rsvp/RSVPSection";
 import { PhotoSharingSection } from "./components/sharing/PhotoSharingSection";
 import { TipsSection } from "./components/tips/TipsSection";
@@ -23,7 +24,7 @@ export default function App() {
             <CountdownDisplay />
           </div>
           <CelebrationSection />
-          {/* <MusicSection /> */}
+          <MusicSection />
           <DressCodeSection />
           <TipsSection />
           <PhotoSharingSection />

@@ -1,48 +1,52 @@
 export const MUSIC_FORM_CONFIG = {
-  formId: '1crnnYq8KK3fHRHNGpWHSalHlmZnoNi_KOM0R1jqI5aA',
+  formId: "1crnnYq8KK3fHRHNGpWHSalHlmZnoNi_KOM0R1jqI5aA",
   fields: {
-    name: '1164357296',
-    song: '1710633586',
-    artist: '1761084776',
-    link: '1504255932',
+    name: "1164357296",
+    song: "1710633586",
+    artist: "1761084776",
+    link: "1504255932",
   },
 };
 
 export const RSVP_FORM_CONFIG = {
-  formId: '1UrYYdaUHCSIx_NGzLp4WMtMcmczg_VT0GJ_XqND07L8',
+  formId: "1UrYYdaUHCSIx_NGzLp4WMtMcmczg_VT0GJ_XqND07L8",
   fields: {
-    name: '722181604',
-    attendance: '2037012221',
-    guestCount: '349210955',
-    details: '1921230472',
+    name: "722181604",
+    attendance: "2037012221",
+    guestCount: "349210955",
+    details: "1921230472",
+    busSeats: "1025640538",
   },
 };
 
 export interface SubmissionStatus {
-  type: 'success' | 'error' | '';
+  type: "success" | "error" | "";
   message: string;
 }
 
-async function submitForm(formId: string, data: Record<string, string>): Promise<void> {
+async function submitForm(
+  formId: string,
+  data: Record<string, string>
+): Promise<void> {
   const formUrl = `https://docs.google.com/forms/d/${formId}/formResponse`;
-  
+
   return new Promise((resolve, reject) => {
     const iframeName = `hidden-frame-${Date.now()}`;
-    const iframe = document.createElement('iframe');
+    const iframe = document.createElement("iframe");
     iframe.name = iframeName;
-    iframe.style.display = 'none';
+    iframe.style.display = "none";
     document.body.appendChild(iframe);
 
-    const form = document.createElement('form');
-    form.method = 'POST';
+    const form = document.createElement("form");
+    form.method = "POST";
     form.action = formUrl;
     form.target = iframeName;
-    form.style.display = 'none';
+    form.style.display = "none";
 
     // Add form fields
     for (const [key, value] of Object.entries(data)) {
-      const input = document.createElement('input');
-      input.type = 'hidden';
+      const input = document.createElement("input");
+      input.type = "hidden";
       input.name = key;
       input.value = value;
       form.appendChild(input);
@@ -60,7 +64,7 @@ async function submitForm(formId: string, data: Record<string, string>): Promise
 
     iframe.onerror = () => {
       cleanup();
-      reject(new Error('Form submission failed'));
+      reject(new Error("Form submission failed"));
     };
 
     document.body.appendChild(form);
@@ -73,13 +77,15 @@ async function submitForm(formId: string, data: Record<string, string>): Promise
   });
 }
 
-export async function submitToGoogleForms(data: Record<string, string>): Promise<void> {
+export async function submitToGoogleForms(
+  data: Record<string, string>
+): Promise<void> {
   const formData = new FormData();
-  
+
   formData.append(`entry.${MUSIC_FORM_CONFIG.fields.name}`, data.name);
   formData.append(`entry.${MUSIC_FORM_CONFIG.fields.song}`, data.song);
   formData.append(`entry.${MUSIC_FORM_CONFIG.fields.artist}`, data.artist);
-  
+
   if (data.link) {
     formData.append(`entry.${MUSIC_FORM_CONFIG.fields.link}`, data.link);
   }
@@ -99,39 +105,55 @@ interface Attendee {
 }
 
 export async function submitRSVP(data: {
-  attendance: 'yes' | 'no';
+  attendance: "yes" | "no";
   attendees?: Attendee[];
   details?: string;
+  needsBus?: "yes" | "no" | null;
+  busSeats?: number;
 }): Promise<void> {
   const formattedData: Record<string, string> = {
-    [`entry.${RSVP_FORM_CONFIG.fields.attendance}`]: data.attendance === 'yes' ? 'Sí' : 'No',
+    [`entry.${RSVP_FORM_CONFIG.fields.attendance}`]:
+      data.attendance === "yes" ? "Sí" : "No",
   };
 
-  if (data.attendance === 'yes' && data.attendees) {
+  if (data.attendance === "yes" && data.attendees) {
     // Submit the total number of attendees
-    formattedData[`entry.${RSVP_FORM_CONFIG.fields.guestCount}`] = data.attendees.length.toString();
-    
+    formattedData[`entry.${RSVP_FORM_CONFIG.fields.guestCount}`] =
+      data.attendees.length.toString();
+
     // Format attendees information for the details field
-    const attendeesDetails = data.attendees.map((attendee, index) => {
-      let details = `Asistente ${index + 1}:\n`;
-      details += `Nombre: ${attendee.name}\n`;
-      if (attendee.dietaryRestrictions) {
-        details += `Restricciones alimentarias: ${attendee.dietaryRestrictions}\n`;
-      }
-      if (attendee.age) {
-        details += `Edad: ${attendee.age}\n`;
-      }
-      return details;
-    }).join('\n');
+    const attendeesDetails = data.attendees
+      .map((attendee, index) => {
+        let details = `Asistente ${index + 1}:\n`;
+        details += `Nombre: ${attendee.name}\n`;
+        if (attendee.dietaryRestrictions) {
+          details += `Restricciones alimentarias: ${attendee.dietaryRestrictions}\n`;
+        }
+        if (attendee.age) {
+          details += `Edad: ${attendee.age}\n`;
+        }
+        return details;
+      })
+      .join("\n");
 
     // Combine attendees details with any additional details
-    const fullDetails = [
-      attendeesDetails,
-      data.details
-    ].filter(Boolean).join('\n\n');
+    const fullDetails = [attendeesDetails, data.details]
+      .filter(Boolean)
+      .join("\n\n");
 
-    formattedData[`entry.${RSVP_FORM_CONFIG.fields.details}`] = fullDetails;
-    formattedData[`entry.${RSVP_FORM_CONFIG.fields.name}`] = data.attendees[0].name;
+    if (fullDetails) {
+      formattedData[`entry.${RSVP_FORM_CONFIG.fields.details}`] = fullDetails;
+    }
+
+    formattedData[`entry.${RSVP_FORM_CONFIG.fields.name}`] =
+      data.attendees[0].name;
+
+    if (data.needsBus === "yes" && data.busSeats) {
+      formattedData[`entry.${RSVP_FORM_CONFIG.fields.busSeats}`] =
+        data.busSeats.toString();
+    } else if (data.needsBus === "no") {
+      formattedData[`entry.${RSVP_FORM_CONFIG.fields.busSeats}`] = "0";
+    }
   }
 
   return submitForm(RSVP_FORM_CONFIG.formId, formattedData);

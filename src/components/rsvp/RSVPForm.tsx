@@ -16,6 +16,8 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
   const [attendance, setAttendance] = useState<"yes" | "no" | null>(null);
   const [attendees, setAttendees] = useState<Attendee[]>([{ name: "" }]);
   const [details, setDetails] = useState("");
+  const [needsBus, setNeedsBus] = useState<"yes" | "no" | null>(null);
+  const [busSeats, setBusSeats] = useState(1);
   const [status, setStatus] = useState<SubmissionStatus>({
     type: "",
     message: "",
@@ -52,6 +54,8 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
         attendance,
         attendees,
         details,
+        needsBus,
+        busSeats: needsBus === "yes" ? busSeats : 0,
       });
 
       setStatus({
@@ -203,6 +207,58 @@ export function RSVPForm({ onSubmit }: RSVPFormProps) {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {attendance === "yes" && (
+        <div className="space-y-4 pt-4 border-t border-[#8FA98F]/20">
+          <div className="space-y-3 font-belista italic">
+            <p className="text-sm font-medium text-[#4A5D4B] font-belista italic">
+              ¿Necesitarás autobús?
+            </p>
+            <div className="flex gap-4">
+              <button
+                type="button"
+                onClick={() => setNeedsBus("yes")}
+                disabled={isSubmitting}
+                className={`flex-1 py-2 rounded-md border transition-colors ${
+                  needsBus === "yes"
+                    ? "bg-[#4A5D4B] text-white border-[#4A5D4B]"
+                    : "border-[#8FA98F] text-[#4A5D4B] hover:bg-[#8FA98F]/10"
+                }`}
+              >
+                Sí
+              </button>
+              <button
+                type="button"
+                onClick={() => setNeedsBus("no")}
+                disabled={isSubmitting}
+                className={`flex-1 py-2 rounded-md border transition-colors ${
+                  needsBus === "no"
+                    ? "bg-[#4A5D4B] text-white border-[#4A5D4B]"
+                    : "border-[#8FA98F] text-[#4A5D4B] hover:bg-[#8FA98F]/10"
+                }`}
+              >
+                No
+              </button>
+            </div>
+          </div>
+
+          {needsBus === "yes" && (
+            <div>
+              <label className="block text-sm font-medium text-[#4A5D4B] mb-2">
+                ¿Cuántas plazas?
+              </label>
+              <input
+                type="number"
+                min="1"
+                value={busSeats}
+                onChange={(e) => setBusSeats(parseInt(e.target.value, 10))}
+                className="w-full px-4 py-2 rounded-md border border-[#8FA98F] focus:outline-none focus:ring-2 focus:ring-[#4A5D4B]"
+                disabled={isSubmitting}
+              />
+            </div>
+          )}
         </div>
       )}
 
