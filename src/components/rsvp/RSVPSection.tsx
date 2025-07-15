@@ -13,7 +13,7 @@ export function RSVPSection() {
         </p>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="px-8 py-3 bg-[#4A5D4B] text-white rounded-md hover:bg-[#8FA98F] transition-colors"
+          className="w-full inline-flex items-center justify-center text-center gap-2 px-8 py-3 bg-[#4A5D4B] text-white rounded-full hover:bg-[#8FA98F] transition-colors"
         >
           CONFIRMAR ASISTENCIA
         </button>
