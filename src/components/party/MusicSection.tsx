@@ -14,7 +14,7 @@ export function MusicSection() {
         </div>
       </div>
       <Section title="Fiesta" className="bg-texture">
-        <div className="max-w-md mx-auto text-center font-belista italic">
+        <div className="max-w-md mx-auto text-center italic">
           <div className="space-y-6">
             <p className="text-[#666666] max-w-[260px] mx-auto">
               ¿Cuál es la canción que no debe faltar en la playlist de la
@@ -23,7 +23,7 @@ export function MusicSection() {
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-8 py-3 bg-[#4A5D4B] text-white rounded-md hover:bg-[#3A4D3B] hover:-translate-y-0.5 transition-all font-semibold tracking-wide text-sm"
+              className="w-full inline-flex items-center justify-center text-center gap-2 px-8 py-3 bg-[#4A5D4B] text-white rounded-full hover:bg-[#8FA98F] transition-colors"
             >
               SUGERIR CANCIÓN
             </button>

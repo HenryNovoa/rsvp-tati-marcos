@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <div className="flex justify-center w-full bg-[#FFFFFF] opacity-50 mb-12">
+    <div className="flex justify-center w-full bg-[#FFFFFF]/50 mb-12">
       <img
         src="https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/logo.svg"
         alt=""

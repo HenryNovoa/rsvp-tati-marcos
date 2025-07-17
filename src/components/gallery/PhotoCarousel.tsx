@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Spinner } from "../shared/Spinner";
 
 const photos = [
@@ -13,7 +13,8 @@ const photos = [
   "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-2.jpg",
   "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-3.jpg",
   "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-4.jpg",
-  "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-6.JPG",
+  "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-5.jpeg",
+  "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-6.jpeg",
   "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-7.jpg",
   "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-8.jpg",
   "https://cdn.jsdelivr.net/gh/HenryNovoa/rsvp-images@main/tati-marcos-9.jpg",
@@ -49,20 +50,41 @@ export function PhotoCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startInterval = () => {
+    // Clear existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    // Start new interval
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex((i) => (i + 1) % photos.length);
+    }, 3000);
+  };
+
   const next = () => {
     setIsLoading(true);
     setCurrentIndex((i) => (i + 1) % photos.length);
+    startInterval(); // Reset the interval
   };
+
   const prev = () => {
     setIsLoading(true);
     setCurrentIndex((i) => (i - 1 + photos.length) % photos.length);
+    startInterval(); // Reset the interval
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((i) => (i + 1) % photos.length);
-    }, 3000);
-    return () => clearInterval(interval);
+    startInterval();
+
+    // Cleanup on unmount
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, []);
 
   return (

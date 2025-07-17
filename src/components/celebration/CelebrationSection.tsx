@@ -12,7 +12,7 @@ export function CelebrationSection() {
       </div>
       <Section title="Ceremonia & Celebración">
         <div className="space-y-8">
-          <EventDetails label="DÍA" text="Domingo 19 de Octubre - 12:30 pm" />
+          <EventDetails label="DÍA" text="Domingo 19 de Octubre - 13:30 pm" />
           <EventDetails
             label="LUGAR"
             text="El Celler de Can Torrens"
